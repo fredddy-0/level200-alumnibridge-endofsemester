@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Projects</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h2>Approved Projects</h2>
+</header>
+
+<div class="container" id="projects"></div>
+
+<script>
+fetch("http://localhost:5000/api/projects")
+.then(res => res.json())
+.then(data => {
+  document.getElementById("projects").innerHTML =
+    data.map(p => `
+      <div class="card">
+        <h3>${p.title}</h3>
+        <p>${p.abstract}</p>
+        <p><b>Department:</b> ${p.department}</p>
+      </div>
+    `).join("");
+});
+</script>
+
+</body>
+</html>

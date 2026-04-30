@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submit Project</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Submit Project</h2>
+
+  <input id="title" placeholder="Title"><br><br>
+  <input id="department" placeholder="Department"><br><br>
+  <input id="supervisor" placeholder="Supervisor"><br><br>
+  <input id="year" placeholder="Year"><br><br>
+
+  <button onclick="submitProject()">Submit</button>
+</div>
+
+<script>
+async function submitProject() {
+  await fetch("http://localhost:5000/api/projects", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      title: title.value,
+      department: department.value,
+      supervisor: supervisor.value,
+      year: year.value,
+      user_id: 1
+    })
+  });
+
+  alert("Project submitted for review");
+}
+</script>
+
+</body>
+</html>
