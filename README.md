@@ -10,3 +10,5 @@ Secure password storage using hashing
 JWT-based authentication
 Project Submission
 
+Render Links External - postgresql://fredddy_0:PbPWCppfxCF53ktHKTpZmmqZXJirCKBr@dpg-d7p8dehkh4rs73d90tig-a.ohio-postgres.render.com/insighthub_db_m57z
+             Internal - postgresql://fredddy_0:PbPWCppfxCF53ktHKTpZmmqZXJirCKBr@dpg-d7p8dehkh4rs73d90tig-a/insighthub_db_m57z
