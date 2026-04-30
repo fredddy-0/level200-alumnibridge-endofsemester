@@ -23,10 +23,10 @@ async function submitProject() {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({
-      title: title.value,
-      department: department.value,
-      supervisor: supervisor.value,
-      year: year.value,
+      title: document.getElementById("title").value,
+      department: document.getElementById("department").value,
+      supervisor: document.getElementById("supervisor").value,
+      year: document.getElementById("year").value,
       user_id: 1
     })
   });

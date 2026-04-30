@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Project Details</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container" id="project"></div>
+
+<h3>Comments</h3>
+<div id="comments"></div>
+
+<input id="commentBox" placeholder="Write a comment">
+<button onclick="postComment()">Send</button>
+
+<script>
+const id = new URLSearchParams(window.location.search).get("id");
+const token = localStorage.getItem("token");
+
+// ================= LOAD PROJECT =================
+fetch(`http://localhost:5000/api/projects/${id}`)
+.then(res => res.json())
+.then(p => {
+  document.getElementById("project").innerHTML = `
+    <div class="card">
+      <h1>${p.title}</h1>
+      <p><b>Abstract:</b> ${p.abstract}</p>
+      <p><b>Department:</b> ${p.department}</p>
+      <p><b>Supervisor:</b> ${p.supervisor}</p>
+      <p><b>Year:</b> ${p.year}</p>
+
+      ${p.file_url ? `<a href="${p.file_url}" target="_blank">View PDF</a><br>` : ""}
+      ${p.video_link ? `<a href="${p.video_link}" target="_blank">Watch Demo</a>` : ""}
+    </div>
+  `;
+});
+
+// ================= LOAD COMMENTS =================
+function loadComments() {
+  fetch(`http://localhost:5000/api/projects/${id}/comments`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("comments").innerHTML =
+      data.map(c => `
+        <div class="card">
+          <b>${c.name}</b>
+          <p>${c.comment}</p>
+        </div>
+      `).join("");
+  });
+}
+
+loadComments();
+
+// ================= POST COMMENT =================
+async function postComment() {
+  await fetch(`http://localhost:5000/api/projects/${id}/comments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({
+      comment: document.getElementById("commentBox").value
+    })
+  });
+
+  document.getElementById("commentBox").value = "";
+  loadComments();
+}
+</script>
+
+</body>
+</html>
